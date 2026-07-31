@@ -1,3 +1,8 @@
+## Started to actually work on 31 July 2026 ##
+## By Lizzie, but just pulled of KNB (I believe) ... 
+## ... and edited ##
+
+
 ###For KNB
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
@@ -6,6 +11,11 @@ graphics.off()
 library(brms)
 library(rstan)
 library(tidybayes)
+library(ggplot2)
+library(dplyr)
+
+
+setwd("/Users/lizzie/Documents/git/projects/treegarden/photoconcept/analyses/")
 
 dat<-read.csv("flobuds_KNB.csv",header = TRUE)
 
@@ -14,7 +24,42 @@ dat$Force<-ifelse(dat$Force=="C",0,1)
 
 dat<-filter(dat, !GEN.SPA %in% c("AME.SPP","BET.SPP", "BET.ALL","ACE.SAC")) ## remove species with no flowering
 
+dat$force <- dat$Force
+dat$force[which(dat$force==0)] <- 18
+dat$force[which(dat$force==1)] <- 24
 
+## Code to replicate walde figure in photoconcept
+# bb has the most data (300 rows), flowering has only 139
+dat %>%
+  filter(Chill==1) %>%
+  ggplot() +
+  aes(force, budburst.9., color = as.factor(Light), group = as.factor(Light), weight = force^3) +
+  geom_point() +
+  theme_bw() +
+  theme(axis.line = element_line(linewidth = 0.5, colour = "darkgray")) +
+  labs(x = "Temperature (°C)",
+       y =  "Mean Time until Budburst (days)") +
+  facet_wrap(GEN.SPA ~ ., scales = "free") +
+  geom_smooth(method = "lm", formula = y ~ I(1/x)) 
+
+quartz()
+# Better data for COM.PER -- 28 obs and VAC.COR -- 30 obs (and COR.COR: 22 obs)
+dat2spp <- dat[which(dat$GEN.SPA %in% c("COM.PER", "VAC.COR")),]
+dat2spp %>%
+  filter(Chill==1) %>%
+  ggplot() +
+  aes(force, flo_day, color = as.factor(Light), group = as.factor(Light), weight = force^3) +
+  geom_point() +
+  theme_bw() +
+  theme(axis.line = element_line(linewidth = 0.5, colour = "darkgray")) +
+  labs(x = "Temperature (°C)",
+       y =  "Mean Time until Budburst (days)") +
+  facet_wrap(GEN.SPA ~ ., scales = "free") +
+  geom_smooth(method = "lm", formula = y ~ I(1/x)) 
+
+
+###########
+##### Code below Lizzie has not edited ...
 #####leaf budburst model #########
 ##################################
 bb.int<-get_prior(budburst.9.~Chill+Light+Force+Chill:Light+Chill:Force+Force:Light,data = dat, family = gaussian()) # check default priors

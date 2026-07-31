@@ -6,6 +6,12 @@
 * Look at OSPREE papers with big effects ... contrast with Populus or other species with small effects? Also, if Populus is supposed to be photoperiod sensitive, see what is up there (sam species? Good studies? What is phtoperiod sensitive in the current research?) (also, maybe check effect when you do not control for thermoperiodicity?)
 * Started to look at OSPREE on 28 July 2026, see analyes/misc/photoperiodlooksee/ in ospree repo
 
+# Do any studies have no light?
+* Two have a photo of zero using `subset(bb.resp, photo==0)` (could also do **fuller** database)
+- anzanello16 which has no photoperiod "without photoperiod" which seems to mean all dark though I did not triple-check
+- okie11 definitely looks at this carefully:
+"Our results showed that after chilling had been minimally satisfied, peach floral and vegetative budbreak occurred faster when forced in the presence of light than when forced in darkness. Light increased budbreak rate as well as the total percentage of budbreak. Red, yellow, and fluorescent light were more promotive in increasing budbreak than blue, green, infrared, or incandescent light, suggesting a role for phytochrome. Promotive effects of light were less when buds had received enough natural chill and heat to break within a week of forcing at 18 8C. In conclusion, light during forcing can have a significant effect of budbreak and needs to be considered when doing research on chilling and dormancy."
+
 # Notes on papers from OSPREE for two species (fagsyl and betpen) in OSPREE
 
 Papers on Fagsyl in OSPREE:
